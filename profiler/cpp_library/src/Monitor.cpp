@@ -127,7 +127,7 @@ MonitorLog::addAndFinalizeLog(unsigned int no, const string& log)
 class GlobalMonitor
 {
   public:
-    GlobalMonitor():_outFile("semantic_profile") {}
+    GlobalMonitor():_outFile("semile") {}
     ~GlobalMonitor() { delete _out; }
     void pushExecution(const ExecutionMonitor* em);
     void popExecution();
