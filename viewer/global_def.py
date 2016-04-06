@@ -81,7 +81,7 @@ def get_traverse():
     return __TRAVERSE
 
 
-__DATA_HOME = (os.environ['HOME'] + get_delim() + 'semantic-profile' + get_delim()) if 'HOME' in os.environ else ''
+__DATA_HOME = (os.environ['HOME'] + get_delim() + 'semile' + get_delim()) if 'HOME' in os.environ else ''
 
 
 def set_data_home(home):

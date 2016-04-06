@@ -41,13 +41,13 @@ class Config(object):
             "True" == self.__config.get("reminder", "verbose")
         set_data_home(data_home)
         set_verbose(verbose)
-        print("====  semantic-profiler setting  =======")
+        print("====  semile setting  =======")
         print("use reduced time: ", reduced_time)
         print("longer time first:", longer_time_first)
         print("max branch:       ", max_branch)
         print("max msg length:   ", max_msg_length)
         # print("data home:        ", data_home)
-        print("========================================")
+        print("=============================")
 
     def get_setting(self, section, option):
         if self.__config.has_option(section, option):
