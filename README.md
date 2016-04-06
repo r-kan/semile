@@ -1,8 +1,8 @@
-# semantic-profile
+# semile
 _~profile what you care, monitor how it goes~_ http://r-kan.github.io/semile/
 
-#What is semantic-profile?  
-A framework that provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:  
+#What is semile?  
+A profiling framework that provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:  
 1. consumed time per execution  
 2. 'footprint' message per execution  
 
