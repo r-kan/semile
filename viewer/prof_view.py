@@ -391,7 +391,7 @@ class ProfileViewer(object):
     def __init__(self):
         self.__has_error = False
         import argparse
-        arg_parser = argparse.ArgumentParser(description="The Semantic Profiling Viewer")
+        arg_parser = argparse.ArgumentParser(description="The Semile Viewer")
         arg_parser.add_argument('profile')
         arg_parser.add_argument("-c", "--config",
                                 dest="config_file", default=DEFAULT_CONFIG_FILE,
