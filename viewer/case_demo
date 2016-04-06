@@ -1,0 +1,13 @@
++{}+1 msg1
++{A.cpp foo 1}+2 oops, no inner execution
++{}+3 msg3
++{A.cpp foo 1}+4 got inner executions!
++{A.cpp foo 1, B.cpp bar 2}+5 some message
++{A.cpp foo 1}+6 msg6
++{A.cpp foo 1, B.cpp bar 2}+7 some other message
++{A.cpp foo 1}+8 msg8
++{}+9 msg9
++{A.cpp foo 1}+10 oops, no inner execution
++{}+11 msg11
++{}+12 msg13
+
