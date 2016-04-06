@@ -1,11 +1,11 @@
 =================================================
-Utility: viewer for semantic-profile
+Utility: viewer for semile
 Author: rkan / its_right@msn.com
 =================================================
 
 usage: prof_view.py [-h] [-c CONFIG_FILE] profile
 
-The Semantic Profiling Viewer
+The Semile Viewer
 
 positional arguments:
   profile
