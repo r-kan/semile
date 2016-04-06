@@ -1,5 +1,5 @@
 # semantic-profile
-_~profile what you care, monitor how it goes~_ http://r-kan.github.io/semantic-profile/
+_~profile what you care, monitor how it goes~_ http://r-kan.github.io/semile/
 
 #What is semantic-profile?  
 A framework that provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:  
@@ -24,4 +24,4 @@ g++ (cpp profile library)
 Please contact *rkan* by its_right@msn.com for any question/request/bug without hesitation. 
 
 ***
-Find screenshots, tutorials, and more information at http://r-kan.github.io/semantic-profile/!
+Find screenshots, tutorials, and more information at http://r-kan.github.io/semile/!
