@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Semile by r-kan</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Semile</h1>
+        <p>profile what you care, monitor how it goes</p>
+
+        <p class="view"><a href="https://github.com/r-kan/semile">View the Project on GitHub <small>r-kan/semile</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/r-kan/semile/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/r-kan/semile/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/r-kan/semile">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="semantic-profile" class="anchor" href="#semantic-profile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>semantic-profile</h1>
+
+<p><em>~profile what you care, monitor how it goes~</em></p>
+
+<hr>
+
+<h1>
+<a id="what-is-semantic-profile" class="anchor" href="#what-is-semantic-profile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is semantic-profile?</h1>
+
+<p>A framework that provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:<br>
+1. consumed time per execution<br>
+2. 'footprint' message per execution  </p>
+
+<h1>
+<a id="difference-with-other-profiling-tools" class="anchor" href="#difference-with-other-profiling-tools" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Difference with other profiling tools?</h1>
+
+<ul>
+<li>
+<strong><em>Profile 'semantically'</em></strong>  Each call to the same function plays its individual role within profiling. Normal 'syntactic' profilers are good in other aspects but fail to achieve this.<br>
+</li>
+<li>
+<strong><em>Lightweight</em></strong>  The profiled program gives little run-time overhead. The viewer is compact that targets to provide only necessary information without fancy visual effect. It gives profile result in widespread PNG and XML format.<br>
+</li>
+<li>
+<strong><em>Message-embedded profile</em></strong>  Customized information can be left within profile elements. It then also provides the ability to help reveal internal state/decision inside the program.<br>
+</li>
+</ul>
+
+<p>P.S. The user-provided semantic specifications (via the profile library) is necessary for semantic profile  </p>
+
+<h1>
+<a id="system-requirement" class="anchor" href="#system-requirement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System Requirement</h1>
+
+<p>python3 (viewer)<br>
+g++ (cpp profile library)  </p>
+
+<h1>
+<a id="dependent-library" class="anchor" href="#dependent-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependent Library</h1>
+
+<p><a href="http://www.graphviz.org">dot (graphviz)</a>    </p>
+
+<hr>
+
+<h1>
+<a id="viewer-demonstration" class="anchor" href="#viewer-demonstration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Viewer Demonstration</h1>
+
+<p><a href="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semantic-profile/sample.png"><img border="0" alt="semantic-profile viewer PNG format sample" src="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semantic-profile/sample.png" width="616" height="120"></a><br>
+(PNG format)  </p>
+
+<p><a href="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semantic-profile/sample_xml.png"><img border="0" alt="semantic-profile viewer PNG format sample" src="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semantic-profile/sample_xml.png" width="252" height="188"></a><br>
+(XML format, browse by <a href="http://codebeautify.org/xmlviewer">codebeautify.org/xmlviewer</a>))</p>
+
+<hr>
+
+<h1>
+<a id="profile-library" class="anchor" href="#profile-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Profile Library</h1>
+
+<p><code>semantic-profile</code> does not aim to profile all program execution, it only profile the execution specified via the profile library. Currently, cpp profile library is provided.  </p>
+
+<h1>
+<a id="tutorial-profile-a-cpp-program" class="anchor" href="#tutorial-profile-a-cpp-program" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tutorial: profile a cpp program</h1>
+
+<ol>
+<li>Choose the execution to be profiled<br>
+</li>
+<li>Let the execution be in some sense derived from <code>ExecutionMonitor</code><br>
+
+<ul>
+<li>Model the execution as a function, and place it inside an <code>ExecutionMonitor</code> descendant.<br>
+</li>
+<li>In particular, if the execution matches life cycle of a class object, then subclass <code>ExecutionMonitor</code> does the job.<br>
+</li>
+</ul>
+</li>
+</ol>
+
+<p>Optionally, call <code>ExecutionMonitor::addMessage()</code> during life cycle of the <code>ExecutionMonitor</code> descendant, to leave any footprint message.  </p>
+
+<h1>
+<a id="code-example" class="anchor" href="#code-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code example</h1>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">quicksort</span>(vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos);</pre></div>
+
+<p>Suppose <em>quicksort</em> is the profiling target,  </p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">QuicksortMonitor</span>: <span class="pl-k">public</span> <span class="pl-en">ExecutionMonitor</span>
+{
+  <span class="pl-en">QuicksortMonitor</span>()
+   :ExecutionMonitor(<span class="pl-s"><span class="pl-pds">"</span>quicksort<span class="pl-pds">"</span></span>, __FILE__, __LINE__)  {}
+  <span class="pl-k">void</span> <span class="pl-en">operator</span>()(vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos) 
+  { 
+    <span class="pl-k">return</span> <span class="pl-c1">quicksort_impl</span>(x, start_pos, end_pos); 
+  }
+};</pre></div>
+
+<p>Class <em>QuicksortMonitor</em>, derived from <code>ExecutionMonitor</code>, is created. There is a function operator inside <em>QuicksortMonitor</em>, with its interface and implementation copy from <em>quicksort</em>. Note that <em>quicksort</em> is renamed to <em>quicksort_impl</em>.  </p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">quicksort</span>(vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos)
+{
+  <span class="pl-c1">QuicksortMonitor</span>()(x, start_pos, end_pos);
+}</pre></div>
+
+<p>The profiling enabled <em>quicksort</em> now instantiate a <em>QuicksortMonitor</em> instance, and invokes its function operator.  </p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">QuicksortMonitor::addMsg</span>(
+  <span class="pl-k">const</span> vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos)
+{  
+  stringstream stream;
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> i = start_pos; i &lt;= end_pos; ++i) {
+    stream &lt;&lt; x[i] &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span>;
+  }
+  <span class="pl-c1">addMessage</span>(stream.<span class="pl-c1">str</span>());
+}</pre></div>
+
+<p>In addition, we can log profile message within <em>QuicksortMonitor</em> at any time.  </p>
+
+<p>One possible viewer generated PNG is as follows:<br>
+<a href="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semantic-profile/profile_quicksort.png"><img border="0" alt="the viewer generated PNG for quicksort" src="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semantic-profile/profile_quicksort.png" width="616" height="96"></a>  </p>
+
+<hr>
+
+<h1>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contact</h1>
+
+<p>Please contact <em>rkan</em> by <a href="mailto:its_right@msn.com">its_right@msn.com</a> for any question/request/bug without hesitation. </p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/r-kan">r-kan</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
