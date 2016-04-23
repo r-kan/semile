@@ -4,8 +4,17 @@
 import unittest
 
 
-class HtmParserTest(unittest.TestCase):
-    __config_data = None
+def adjust_path():
+    pre_path_list = []
+    import sys
+    for path in sys.path:
+        if "semile" in path:
+            pre_path_list.append(path)
+    for path in pre_path_list:
+        sys.path.insert(0, path)
+
+
+class ProfViewTest(unittest.TestCase):
 
     def setUp(self):
         print("==============")
@@ -13,6 +22,7 @@ class HtmParserTest(unittest.TestCase):
         print("==============")
 
     def test_prof_view(self):
+        adjust_path()
         from prof_view import ProfileParser, Tree
         parser = ProfileParser("case_test")
         execution_tree = Tree(parser.start_time)
