@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace semantic_profile
+namespace semile
 {
 
 class GlobalMonitor;

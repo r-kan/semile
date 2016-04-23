@@ -12,7 +12,7 @@
 
 using namespace std;
 
-namespace semantic_profile
+namespace semile
 {
 
 struct LogEntry

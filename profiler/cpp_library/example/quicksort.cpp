@@ -6,7 +6,7 @@
 #include <Monitor.h>
 
 using namespace std;
-using namespace semantic_profile;
+using namespace semile;
 
 void quicksort(vector<int>& x, int start_pos, int end_pos);
 
