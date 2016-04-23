@@ -1,4 +1,4 @@
-# semile
+# semile :)
 _~profile what you care, monitor how it goes~_ http://r-kan.github.io/semile/
 
 #What is _semile_?  
