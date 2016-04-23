@@ -8,7 +8,7 @@ Instruction to build the cpp profile library
 
 ------------------------------------------------
 Instruction to use the cpp profile library in client code
-    1. add the location of Monitor.h in compilation
+    1. include Monitor.h in source and add its location in compilation
         for example,
             g++ -c -I$(SEMILE_HOME)/profiler/cpp_library/src -o client.o client.cpp
     2. add Monitor.o in linking
