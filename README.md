@@ -20,6 +20,11 @@ g++ (cpp profile library)
 # Dependent Library
 <a href="http://www.graphviz.org" target="_blank">dot (graphviz)</a>   
 
+# Use _semile_
+`profiler/cpp_library/src/README.txt` :) check to see how to use cpp profile library  
+`profiler/cpp_library/example`  :) check to see an example using the profile library  
+`viewer/README.txt` :) check to see how to use semile viewer
+
 # Contact  
 Please contact *rkan* by its_right@msn.com for any question/request/bug without hesitation. 
 
