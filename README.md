@@ -21,9 +21,9 @@ g++ (cpp profile library)
 <a href="http://www.graphviz.org" target="_blank">dot (graphviz)</a>   
 
 # Use _semile_
-<a href="https://github.com/r-kan/semile/tree/master/profiler/cpp_library/src" target="_blank">`profiler/cpp_library/src/README.txt`</a> ...check to see how to use cpp profile library  
-<a href="https://github.com/r-kan/semile/tree/master/profiler/cpp_library/example" target="_blank">`profiler/cpp_library/example`</a> ...check to see an example using the profile library  
-<a href="https://github.com/r-kan/semile/tree/master/viewer" target="_blank">`viewer/README.txt`</a> ...check to see how to use semile viewer
+<a href="https://github.com/r-kan/semile/tree/master/profiler/cpp_library/src" target="_blank">profiler/cpp_library/src/README.txt</a> => check to see how to use cpp profile library  
+<a href="https://github.com/r-kan/semile/tree/master/profiler/cpp_library/example" target="_blank">profiler/cpp_library/example</a> => check to see an example using profile library  
+<a href="https://github.com/r-kan/semile/tree/master/viewer" target="_blank">viewer/README.txt</a> => check to see how to use semile viewer
 
 # Contact  
 Please contact *rkan* by its_right@msn.com for any question/request/bug without hesitation. 
