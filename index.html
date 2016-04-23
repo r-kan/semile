@@ -53,7 +53,7 @@
 <strong><em>Lightweight</em></strong>  The profiled program gives little run-time overhead. The viewer is compact that targets to provide only necessary information without fancy visual effect. It gives profile result in widespread PNG and XML format.<br>
 </li>
 <li>
-<strong><em>Message-embedded profile</em></strong>  Customized information can be left within profile elements. It then also provides the ability to help reveal internal state/decision inside the program.<br>
+<strong><em>Message-embedded profile</em></strong>  Custom information can be left within profile elements. It then also provides the ability to help reveal internal state/decision inside the program.<br>
 </li>
 </ul>
 
@@ -92,20 +92,20 @@ g++ (cpp profile library)  </p>
 <a id="tutorial-profile-a-cpp-program" class="anchor" href="#tutorial-profile-a-cpp-program" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tutorial: profile a cpp program</h1>
 
 <ol>
-<li>Choose the execution to be profiled<br>
+<li>Choose the statements to be profiled<br>
 </li>
-<li>Let the execution be in some sense derived from <code>ExecutionMonitor</code><br>
+<li>Let the statements be in some sense derived from <code>ExecutionMonitor</code><br>
 
 <ul>
-<li>Model the execution as a function, and place it inside an <code>ExecutionMonitor</code> descendant.<br>
+<li>Model the statements as a function, and place it inside an <code>ExecutionMonitor</code> descendant.<br>
 </li>
-<li>In particular, if the execution matches life cycle of a class object, then subclass <code>ExecutionMonitor</code> does the job.<br>
+<li>In particular, if the statements matches life cycle of a class object, then subclass <code>ExecutionMonitor</code> does the job.<br>
 </li>
 </ul>
 </li>
 </ol>
 
-<p>Optionally, call <code>ExecutionMonitor::addMessage()</code> during life cycle of the <code>ExecutionMonitor</code> descendant, to leave any footprint message.  </p>
+<p>Optionally, call <code>ExecutionMonitor::addMessage()</code> during life cycle of the <code>ExecutionMonitor</code> descendant, to leave custom footprint message.  </p>
 
 <h1>
 <a id="code-example" class="anchor" href="#code-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code example</h1>
