@@ -1,5 +1,5 @@
 # semile :)
-_~profile what you care, monitor how it goes~_ http://r-kan.github.io/semile/
+_~We semile bcoz it helps overcome the flaw/bottleneck of our programs~_ http://r-kan.github.io/semile/
 
 #What is _semile_?  
 A profiling framework provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:  
