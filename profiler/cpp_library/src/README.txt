@@ -13,7 +13,7 @@ Instruction to use the cpp profile library in client code
             g++ -c -I$(SEMILE_HOME)/profiler/cpp_library/src -o client.o client.cpp
     2. add Monitor.o in linking
         for example,
-            g++ -o client.o Monitor.o
+            g++ -o a.out main.o client.o Monitor.o
     3. run the program, then the file 'semile_CURTIME' will be generated
        (CURTIME: string representation of current datetime)
 
