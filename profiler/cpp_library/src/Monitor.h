@@ -1,5 +1,5 @@
-#ifndef MONITOR_H
-#define MONITOR_H
+#ifndef SEMILE_MONITOR_H
+#define SEMILE_MONITOR_H
 
 #include <string>
 
