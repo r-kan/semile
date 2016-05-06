@@ -479,6 +479,7 @@ class ProfileViewer(object):
         write_fd.close()
         dot_path = locate_abs_exec("dot")
         if not dot_path:
+            print("[WARNING] \"dot\" not available, skip generating PNG file")
         else:
             os.system(dot_path + " " + dot_file + " -T png -o " + pic_file)
         os.remove(dot_file)
