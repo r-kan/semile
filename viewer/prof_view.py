@@ -383,6 +383,22 @@ def flush_print(msg, new_line=False):
     sys.stdout.flush()
 
 
+def locate_abs_exec(program):  # 'program' can be an absolute path name, or just a basename
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+    return None
+
+
 DEFAULT_CONFIG_FILE = "config.ini"
 
 
@@ -461,7 +477,10 @@ class ProfileViewer(object):
     def __end_dot(write_fd, dot_file, pic_file):
         write_fd.write("}\n")
         write_fd.close()
-        os.system("dot " + dot_file + " -T png -o " + pic_file)
+        dot_path = locate_abs_exec("dot")
+        if not dot_path:
+        else:
+            os.system(dot_path + " " + dot_file + " -T png -o " + pic_file)
         os.remove(dot_file)
 
 
