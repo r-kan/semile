@@ -17,25 +17,25 @@ optional arguments:
 -------------------------------------------------
 Sample usage:
   python3 prof_view.py case_demo
-  => prof_view.png and prof_view.xml will be generated
+  => case_demo.png and case_demo.xml will be generated
   
 -------------------------------------------------
 Configurable options:
 
 [profile]
-use_reduced_time
+use_reduced_time (default: False)
   => True: reduce the consumed time of each execution to simulate profiling overhead
   => False: use original consumed time
 
 [view]
-longer_time_first
+longer_time_first (default: False)
   => True: the appearance of execution will be sorted by consumed time
   => False: the appearance of execution will be sorted by its order in profile
   
-max_branch
+max_branch (default: 10)
   => n: the maximum number of shown inner execution in PNG format output 
 
-max_msg_length:
+max_msg_length (default: 40)
   => n: the maximum length of shown message per execution
 
 =================================================
