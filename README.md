@@ -26,7 +26,7 @@ g++ (cpp profile library)
 <a href="https://github.com/r-kan/semile/tree/master/viewer" target="_blank">viewer/README.txt</a> => check to see how to use semile viewer
 
 # Contact  
-Please contact <a href='http://r-kan.github.io'>*rkan*</a> by its_right@msn.com for any question/request/bug without hesitation. 
+Please contact <a href='http://r-kan.github.io'>*Rodney Kan*</a> by its_right@msn.com for any question/request/bug without hesitation. 
 
 ***
 Find screenshots, tutorials, and more information at http://r-kan.github.io/semile/!
