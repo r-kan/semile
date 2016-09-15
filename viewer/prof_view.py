@@ -4,8 +4,9 @@
 import logging
 import os
 import sys
-from global_def import get_use_reduced_time, get_longer_time_first, get_max_branch, get_user_config_file, \
-    get_max_msg_length, get_traverse
+from logging import warning
+from global_def import get_use_reduced_time, get_longer_time_first, get_remove_no_msg_entry, \
+    get_max_branch, get_user_config_file, get_max_msg_length, get_traverse
 
 # Ref. http://www.graphviz.org/doc/info/colors.html
 __ROOT_COLOR = "plum1"
@@ -28,6 +29,8 @@ def get_dot_str(parent, parent_time, parent_no, child, child_time, child_no, chi
 
     child_msg_str = child_msg if len(child_msg) <= max_msg_length else child_msg[0:max_msg_length - 3] + "..."
     parent_msg_str = parent_msg if len(parent_msg) <= max_msg_length else parent_msg[0:max_msg_length - 3] + "..."
+    if len(child_msg) > max_msg_length or len(parent_msg) > max_msg_length:
+        warning("[WARN] max message size is met, some messages are not shown")
 
     parent_no_str = ("#%s" % parent_no) if parent_no > 0 else ""
     parent_str = "\"%s%s%s\"" % (parent, parent_no_str, (("\\n" + parent_msg_str) if "" != parent_msg_str else ""))
@@ -75,8 +78,12 @@ class Node(object):
         build_cnt = 0
         for node_tuple in sorted_tuple:
             if -1 != cnt and build_cnt >= cnt:
+                warning("[WARN] max branch count is met, some nodes are not shown")
                 break
             [pos, node, elapsed_time, _] = node_tuple
+            if get_remove_no_msg_entry():
+                if node.no_message():
+                    continue
             logging.debug("%s %s => %s" % (pos, elapsed_time, node.message))
             if is_dot:
                 self_to_child_str = get_dot_str(self.position if not parent_is_group else "",
@@ -100,6 +107,15 @@ class UnitNode(Node):
         super(UnitNode, self).__init__(position, elapsed_time, message)
         self.__nodes = {}  # key: position, value: Node
         self.last_pos = None  # keep position of the 'disclosed' node
+
+    def no_message(self):
+        if "" != self.message:
+            return False
+        for pos in self.__nodes:
+            node = self.__nodes[pos]
+            if not node.no_message():
+                return False
+        return True
 
     def finalize(self):
         for pos in self.__nodes:
@@ -173,6 +189,14 @@ class GroupNode(Node):
     def __init__(self, position):
         super(GroupNode, self).__init__(position, 0, "")
         self.__nodes = []  # UnitNode
+
+    def no_message(self):
+        if "" != self.message:
+            return False
+        for node in self.__nodes:
+            if not node.no_message():
+                return False
+        return True
 
     def enclose_last_pos(self, elapsed_time):
         assert self.__nodes
@@ -375,11 +399,8 @@ class ProfileParser(object):
             print("use reduced time:", ProfileParser.__reduce_time__)
 
 
-def flush_print(msg, new_line=False):
-    if new_line:
-        print(msg)
-    else:
-        print(msg, end="")
+def flush_print(msg):
+    print(msg)
     sys.stdout.flush()
 
 
@@ -406,6 +427,7 @@ class ProfileViewer(object):
 
     def __init__(self):
         self.__has_error = False
+        logging.basicConfig(format='')
         import argparse
         arg_parser = argparse.ArgumentParser(description="The Semile Viewer")
         arg_parser.add_argument('profile')
@@ -432,7 +454,6 @@ class ProfileViewer(object):
         for prof_row in parser:
             self.__execution_tree.add_row(prof_row)
         self.__execution_tree.finalize()
-        flush_print("done", True)
 
     @staticmethod
     def __parse_config(config_file):
@@ -448,14 +469,13 @@ class ProfileViewer(object):
         adopt_name = os.path.basename(self.__profile).replace(file_extname, '')
         dot_file = adopt_name + ".dot"
         pic_file = adopt_name + ".png"
-        flush_print("Generate prof view [" + pic_file + "] ...")
+        flush_print("Generate prof view [" + pic_file + "]")
         dot_fd = ProfileViewer.__begin_dot(dot_file)
         self.__execution_tree.build_view(dot_fd, get_max_branch(), True)
         ProfileViewer.__end_dot(dot_fd, dot_file, pic_file)
-        flush_print("done", True)
 
         xml_file = adopt_name + ".xml"
-        flush_print("Generate command view [" + xml_file + "] ...")
+        flush_print("Generate command view [" + xml_file + "]")
         xml_fd = open(xml_file, 'w')
         xml_fd.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
         main_tag_str = "program_" + "%.4f" % self.__execution_tree.total_time
@@ -463,7 +483,6 @@ class ProfileViewer(object):
         self.__execution_tree.build_view(xml_fd, -1, False)
         xml_fd.write("</" + main_tag_str + ">")
         xml_fd.close()
-        flush_print("done", True)
 
     @staticmethod
     def __begin_dot(dot_file):

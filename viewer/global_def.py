@@ -41,6 +41,18 @@ def set_longer_time_first(longer_time_first):
 def get_longer_time_first():
     return __LONGER_TIME_FIRST
 
+__REMOVE_NO_MSG_ENTRY = False
+
+
+def set_remove_no_msg_entry(remove_no_msg_entry):
+    assert type(remove_no_msg_entry) is bool
+    global __REMOVE_NO_MSG_ENTRY
+    __REMOVE_NO_MSG_ENTRY = remove_no_msg_entry
+
+
+def get_remove_no_msg_entry():
+    return __REMOVE_NO_MSG_ENTRY
+
 
 __MAX_BRANCH = 10
 
