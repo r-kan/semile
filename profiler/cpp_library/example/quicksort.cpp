@@ -6,13 +6,42 @@
 #include <Monitor.h>
 
 using namespace std;
-using namespace semile;
 
-void quicksort(vector<int>& x, int start_pos, int end_pos);
+static string 
+GetStr(const vector<int>& x, int start_pos, int end_pos, bool end_line = true)
+{  
+  static stringstream stream;
+  stream.str("");
+  for (int i = start_pos; i <= end_pos; ++i) {
+    stream << x[i] << " ";
+    if (end_line && i == end_pos) { stream << "\\n"; }
+  }  
+  return stream.str();
+}
+
+static string 
+GetStr(int value)
+{  
+  static stringstream stream;
+  stream.str("");
+  stream << value;
+  return stream.str();
+}
+
+static void
+Swap(vector<int>& x, int i, int j)
+{
+  int temp = x[i];
+  x[i] = x[j];
+  x[j] = temp;
+}
 
 void 
-quicksort_impl(vector<int>& x, int start_pos, int end_pos)
-{
+quicksort(vector<int>& x, int start_pos, int end_pos)
+{ 
+  SEMILE_N(abc);
+  SEMILE_MSG(GetStr(x, start_pos, end_pos));
+
   timespec ts;
   ts.tv_sec = 0;
   ts.tv_nsec = 100000000;
@@ -21,9 +50,10 @@ quicksort_impl(vector<int>& x, int start_pos, int end_pos)
   if (start_pos < end_pos)
   {
     int pivot = start_pos;
+    SEMILE_MSG("pivot: " + GetStr(x[pivot]) + "\\n");
+    
     int i = start_pos;
     int j = end_pos;
-    int temp;
 
     while (i < j)
     {
@@ -35,46 +65,21 @@ quicksort_impl(vector<int>& x, int start_pos, int end_pos)
       }
       if (i < j)
       {
-        temp = x[i];
-        x[i] = x[j];
-        x[j] = temp;
+        SEMILE_MSG(GetStr(x[i]) + " <=> " + GetStr(x[j]) + "\\n");
+        Swap(x, i, j);
       }
     }
 
-    temp = x[pivot];
-    x[pivot] = x[j];
-    x[j] = temp;
+    if (j != pivot)
+    {
+      SEMILE_MSG(GetStr(x[pivot]) + " <=> " + GetStr(x[j]) + "\\n");
+      Swap(x, pivot, j);   
+    }
     
     quicksort(x, start_pos, j - 1);
     quicksort(x, j + 1, end_pos);
   }
-}
 
-class QuicksortMonitor: public ExecutionMonitor
-{
-  public:
-    QuicksortMonitor(const vector<int>& x, int start_pos, int end_pos):ExecutionMonitor("quicksort", __FILE__, __LINE__) 
-    { 
-      addMsg(x, start_pos, end_pos);  
-    }
-    void operator()(vector<int>& x, int start_pos, int end_pos) 
-    { 
-      return quicksort_impl(x, start_pos, end_pos); 
-    }
-    void addMsg(const vector<int>& x, int start_pos, int end_pos)
-    {  
-      stringstream stream;
-      for (int i = start_pos; i <= end_pos; ++i) {
-        stream << x[i] << " ";
-      }
-      addMessage(stream.str());
-    }
-};
-
-void 
-quicksort(vector<int>& x, int start_pos, int end_pos)
-{
-  QuicksortMonitor monitor(x, start_pos, end_pos);
-  monitor(x, start_pos, end_pos);
+  SEMILE_MSG(GetStr(x, start_pos, end_pos, false));
 }
 
