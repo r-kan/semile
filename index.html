@@ -95,56 +95,38 @@ g++ (cpp profile library)  </p>
 <ol>
 <li>Choose the statements to be profiled<br>
 </li>
-<li>Let the statements be in some sense derived from <code>ExecutionMonitor</code><br>
-
-<ul>
-<li>Model the statements as a function, and place it inside an <code>ExecutionMonitor</code> descendant.<br>
-</li>
-<li>In particular, if the statements matches life cycle of a class object, then subclass <code>ExecutionMonitor</code> does the job.<br>
-</li>
-</ul>
+<li>Have a <code>SEMILE</code> in same scope of the statements<br>
+and that's done!<br>
 </li>
 </ol>
 
-<p>Optionally, call <code>ExecutionMonitor::addMessage()</code> during life cycle of the <code>ExecutionMonitor</code> descendant, to leave custom footprint message.  </p>
+<p>Besides, a helpful way diagnosing is use <code>SEMILE_MSG</code> to leave custom footprint message.  </p>
 
 <h1>
 <a id="code-example" class="anchor" href="#code-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code example</h1>
 
-<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">quicksort</span>(vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos);</pre></div>
-
-<p>Suppose <em>quicksort</em> is the profiling target,  </p>
-
-<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">QuicksortMonitor</span>: <span class="pl-k">public</span> <span class="pl-en">ExecutionMonitor</span>
-{
-  <span class="pl-en">QuicksortMonitor</span>()
-   :ExecutionMonitor(<span class="pl-s"><span class="pl-pds">"</span>quicksort<span class="pl-pds">"</span></span>, __FILE__, __LINE__)  {}
-  <span class="pl-k">void</span> <span class="pl-en">operator</span>()(vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos) 
-  { 
-    <span class="pl-k">return</span> <span class="pl-c1">quicksort_impl</span>(x, start_pos, end_pos); 
-  }
-};</pre></div>
-
-<p>Class <em>QuicksortMonitor</em>, derived from <code>ExecutionMonitor</code>, is created. There is a function operator inside <em>QuicksortMonitor</em>, with its interface and implementation copy from <em>quicksort</em>. Note that <em>quicksort</em> is renamed to <em>quicksort_impl</em>.  </p>
-
 <div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">quicksort</span>(vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos)
 {
-  <span class="pl-c1">QuicksortMonitor</span>()(x, start_pos, end_pos);
+  SEMILE; <span class="pl-c">// profile at beginning of the scope</span>
+  <span class="pl-c">// SEMILE_N(abc); // profile can have custom name</span>
+  ...
 }</pre></div>
 
-<p>The profiling enabled <em>quicksort</em> now instantiate a <em>QuicksortMonitor</em> instance, and invokes its function operator.  </p>
+<p>Then every execution of <em>quicksort</em> will be profiled.<br>
+Note that nested or recursive <code>SEMILE</code> is also supported.</p>
 
-<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">QuicksortMonitor::addMsg</span>(
-  <span class="pl-k">const</span> vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos)
-{  
-  stringstream stream;
-  <span class="pl-k">for</span> (<span class="pl-k">int</span> i = start_pos; i &lt;= end_pos; ++i) {
-    stream &lt;&lt; x[i] &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span>;
-  }
-  <span class="pl-c1">addMessage</span>(stream.<span class="pl-c1">str</span>());
+<div class="highlight highlight-source-c++"><pre>{
+  SEMILE;
+  <span class="pl-c1">SEMILE_MSG</span>(<span class="pl-c1">GetStr</span>(x, start_pos, end_pos));
+  ...
+  <span class="pl-k">int</span> pivot = start_pos;
+  <span class="pl-c1">SEMILE_MSG</span>(<span class="pl-s"><span class="pl-pds">"</span>pivot: <span class="pl-pds">"</span></span> + <span class="pl-c1">GetStr</span>(x[pivot]) + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>n<span class="pl-pds">"</span></span>);
+  ...
+  <span class="pl-c1">Swap</span>(x, i, j);  
+  <span class="pl-c1">SEMILE_MSG</span>(<span class="pl-c1">GetStr</span>(x[i]) + <span class="pl-s"><span class="pl-pds">"</span> &lt;=&gt; <span class="pl-pds">"</span></span> + <span class="pl-c1">GetStr</span>(x[j]) + <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>n<span class="pl-pds">"</span></span>);
 }</pre></div>
 
-<p>In addition, we can log profile message within <em>QuicksortMonitor</em> at any time.  </p>
+<p>After <code>SEMILE</code>, we can have <code>SEMILE_MSG</code> at any time to log profile message.  </p>
 
 <p>One possible viewer generated PNG is as follows:<br>
 (run quicksort 3 times with random inputs)<br>
