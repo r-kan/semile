@@ -96,9 +96,10 @@ g++ (cpp profile library)  </p>
 <li>Choose the statements to be profiled<br>
 </li>
 <li>Have a <code>SEMILE</code> in same scope of the statements<br>
-and that's done!<br>
 </li>
 </ol>
+
+<p>That's done!  </p>
 
 <p>Besides, a helpful way diagnosing is use <code>SEMILE_MSG</code> to leave custom footprint message.  </p>
 
@@ -112,10 +113,11 @@ and that's done!<br>
   ...
 }</pre></div>
 
-<p>Then every execution of <em>quicksort</em> will be profiled.<br>
-Note that nested or recursive <code>SEMILE</code> is also supported.</p>
+<p>Here, every execution of <em>quicksort</em> will be profiled.<br>
+Note that nested or recursive <code>SEMILE</code> is also possible.</p>
 
-<div class="highlight highlight-source-c++"><pre>{
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">quicksort</span>(vector&lt;<span class="pl-k">int</span>&gt;&amp; x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos)
+{
   SEMILE;
   <span class="pl-c1">SEMILE_MSG</span>(<span class="pl-c1">GetStr</span>(x, start_pos, end_pos));
   ...
