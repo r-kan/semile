@@ -4,7 +4,7 @@ _~Simpler way to profile and diagnose~_ http://r-kan.github.io/semile/
 #What is _semile_?  
 A profiling framework provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:  
 1. consumed time per execution  
-2. 'footprint' message per execution  
+2. 'footprint' debug message per execution  
 
 #Difference with other profiling tools?  
 * **_Profile 'semantically'_**  Each call to the same function plays its individual role within profiling. Normal 'syntactic' profilers are good in other aspects but fail to achieve this.  
