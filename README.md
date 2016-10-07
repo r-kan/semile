@@ -16,7 +16,7 @@ P.S. The user-provided semantic specifications (via the profile library) is nece
 
 # System Requirement
 python3 (viewer)   
-g++ (cpp profile library)  
+g++ (c/cpp profile library)  
 
 # Dependent Library
 <a href="http://www.graphviz.org" target="_blank">dot (graphviz)</a>   
