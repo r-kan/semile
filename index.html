@@ -139,8 +139,8 @@ Here, internal flow of <em>quicksort</em> is revealed and combined to resulted p
 <a id="tutorial-exploit-the-c-interface" class="anchor" href="#tutorial-exploit-the-c-interface" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tutorial: exploit the c interface</h1>
 
 <p>Due to the lack of RAII, <code>semile</code> support in c requires a pair of profile specifications<br>
-1. SEMILE_BEGIN, where profile resource is allocated<br>
-2. SEMILE_END, where profile resource is released  </p>
+1. <code>SEMILE_BEGIN</code>, where profile resource is allocated
+2. <code>SEMILE_END</code>, where profile resource is released  </p>
 
 <h1>
 <a id="code-example-1" class="anchor" href="#code-example-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code example</h1>
@@ -153,7 +153,7 @@ Here, internal flow of <em>quicksort</em> is revealed and combined to resulted p
   <span class="pl-c1">SEMILE_END</span>(inst);
 }</pre></div>
 
-<p>It takes more care to handle <code>SEMILE_END</code>. However, be able to control directly the profile instance gives more flexibility, e.g., conditional profile:</p>
+<p>It takes more care to handle <code>SEMILE_END</code>. However, be able to control directly the profile instance also gives more flexibility, e.g., conditional profile:</p>
 
 <div class="highlight highlight-source-c"><pre><span class="pl-k">void</span>* inst = <span class="pl-c1">NULL</span>;
 <span class="pl-k">if</span> (is_cared_run) {
