@@ -64,7 +64,7 @@
 <a id="system-requirement" class="anchor" href="#system-requirement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System Requirement</h1>
 
 <p>python3 (viewer)<br>
-g++ (cpp profile library)  </p>
+g++ (c/cpp profile library)  </p>
 
 <h1>
 <a id="dependent-library" class="anchor" href="#dependent-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependent Library</h1>
@@ -135,14 +135,47 @@ Here, internal flow of <em>quicksort</em> is revealed and combined to resulted p
 (run quicksort 3 times with random inputs)<br>
 <a href="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semile/profile_quicksort.png"><img border="0" alt="the viewer generated PNG for quicksort" src="https://raw.githubusercontent.com/r-kan/r-kan.github.io/master/images/semile/profile_quicksort.png" width="616" height="161"></a>  </p>
 
-<hr>
+<h1>
+<a id="tutorial-exploit-the-c-interface" class="anchor" href="#tutorial-exploit-the-c-interface" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tutorial: exploit the c interface</h1>
+
+<p>Due to the lack of RAII, <code>semile</code> support in c requires a pair of profile specifications<br>
+1. SEMILE_BEGIN, where profile resource is allocated<br>
+2. SEMILE_END, where profile resource is released  </p>
 
 <h1>
-<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contact</h1>
+<a id="code-example-1" class="anchor" href="#code-example-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code example</h1>
 
-<p>Please contact <a href="http://r-kan.github.io"><em>Rodney Kan</em></a> by <a href="mailto:its_right@msn.com">its_right@msn.com</a> for any question/request/bug without hesitation. </p>
+<div class="highlight highlight-source-c"><pre><span class="pl-k">void</span> <span class="pl-en">quicksort</span>(<span class="pl-k">int</span>* x, <span class="pl-k">int</span> start_pos, <span class="pl-k">int</span> end_pos)
+{
+  <span class="pl-k">void</span>* inst = SEMILE_BEGIN;
+  <span class="pl-c1">SEMILE_MSG_C</span>(inst, <span class="pl-c1">GetStr</span>(x, start_pos, end_pos));
+  ...
+  <span class="pl-c1">SEMILE_END</span>(inst);
+}
 
+It takes more care to handle `SEMILE_END`. However, be able to control directly the profile instance gives more flexibility, e.g., conditional profile:
 
+```c
+<span class="pl-k">void</span>* inst = <span class="pl-c1">NULL</span>;
+<span class="pl-k">if</span> (is_cared_run) {
+  inst = SEMILE_BEGIN;
+}
+...
+<span class="pl-en">SEMILE_END</span>(inst);
+***
+
+# Contact  
+Please contact &lt;a href=<span class="pl-s"><span class="pl-pds">'</span>http://r-kan.github.io<span class="pl-pds">'</span></span>&gt;*Rodney Kan*&lt;/a&gt; by its_right@msn.com <span class="pl-k">for</span> any question/request/bug without hesitation. 
+&lt;script&gt;
+  (function(i,s,o,g,r,a,m){i[<span class="pl-s"><span class="pl-pds">'</span>GoogleAnalyticsObject<span class="pl-pds">'</span></span>]=r;i[r]=i[r]||<span class="pl-c1">function</span>(){
+  (i[r].<span class="pl-smi">q</span>=i[r].<span class="pl-smi">q</span>||[]).<span class="pl-c1">push</span>(arguments)},i[r].<span class="pl-smi">l</span>=<span class="pl-c1">1</span>*new <span class="pl-c1">Date</span>();a=s.<span class="pl-c1">createElement</span>(o),
+  m=s.<span class="pl-c1">getElementsByTagName</span>(o)[<span class="pl-c1">0</span>];a.<span class="pl-smi">async</span>=<span class="pl-c1">1</span>;a.<span class="pl-smi">src</span>=g;m.<span class="pl-smi">parentNode</span>.<span class="pl-c1">insertBefore</span>(a,m)
+  })(window,document,<span class="pl-s"><span class="pl-pds">'</span>script<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>https://www.google-analytics.com/analytics.js<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>ga<span class="pl-pds">'</span></span>);
+
+  <span class="pl-en">ga</span>(<span class="pl-s"><span class="pl-pds">'</span>create<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>UA-71836859-3<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>auto<span class="pl-pds">'</span></span>);
+  <span class="pl-en">ga</span>(<span class="pl-s"><span class="pl-pds">'</span>send<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>pageview<span class="pl-pds">'</span></span>);
+
+&lt;/script&gt;</pre></div>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/r-kan">r-kan</a></p>
