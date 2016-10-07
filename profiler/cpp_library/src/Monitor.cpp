@@ -208,9 +208,25 @@ GlobalMonitor::popExecution()
  * *** ExecutionMonitor
  *===========================================================*/
 
-static bool gIsDisableMonitor = false;
-void SetDisableMonitor(bool disable) { gIsDisableMonitor = disable;}
-static bool IsDisableMonitor() { return gIsDisableMonitor; }
+static bool gMonitorEnabled = true;
+static bool 
+IsMonitorEnabled() 
+{ 
+  static bool isEnvQueried = false; 
+  
+  if (false == isEnvQueried) 
+  { 
+    char* envStr = getenv("SEMILE_ENABLE"); 
+    if (envStr) 
+    { 
+      int envVal = atoi(envStr);
+      gMonitorEnabled = (envVal >= 1)? true: false;
+    } 
+    isEnvQueried = true; 
+  } 
+
+  return gMonitorEnabled; 
+}
 
 ExecutionMonitor::ExecutionMonitor(
   string function, 
@@ -220,14 +236,14 @@ ExecutionMonitor::ExecutionMonitor(
   _file(file), 
   _lineNo(lineNo)
 {
-  if (IsDisableMonitor()) { return; }
+  if (false == IsMonitorEnabled()) { return; }
   
   gMonitor.pushExecution(this);
 }
 
 ExecutionMonitor::~ExecutionMonitor() 
 {
-  if (IsDisableMonitor()) { return; }
+  if (false == IsMonitorEnabled()) { return; }
   
   gMonitor.popExecution();
 }
