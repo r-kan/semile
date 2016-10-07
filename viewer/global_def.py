@@ -67,7 +67,7 @@ def get_max_branch():
     return __MAX_BRANCH
 
 
-__MAX_MSG_LENGTH = 40
+__MAX_MSG_LENGTH = 100
 
 
 def set_max_msg_length(msg_length):
