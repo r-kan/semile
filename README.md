@@ -1,6 +1,8 @@
 # semile :)
 _~Simpler way to profile and diagnose~_ http://r-kan.github.io/semile/  
-Update: `semile` is refined with much more simpler use model! 
+Update:   
+2016/10/07: c interface is supported  
+2016/09/24: `semile` is refined with much more simpler use model!
 
 #What is _semile_?  
 A profiling framework provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:  
