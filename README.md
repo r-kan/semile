@@ -1,6 +1,6 @@
 # semile :)
 _~Simpler way to profile and diagnose~_ http://r-kan.github.io/semile/  
-Update:   
+   
 2016/10/07: c interface is supported  
 2016/09/24: `semile` is refined with much more simpler use model!
 
