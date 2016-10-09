@@ -28,7 +28,7 @@ g++ (c/cpp profile library)
 <a href="https://github.com/r-kan/semile/tree/master/profiler/cpp_library/example" target="_blank">profiler/cpp_library/example</a> => check to see an example using cpp profile library  
 <a href="https://github.com/r-kan/semile/tree/master/profiler/c_interface/src" target="_blank">profiler/c_interface/src/README.txt</a> => check to see how to use c profile interface  
 <a href="https://github.com/r-kan/semile/tree/master/profiler/c_interface/example" target="_blank">profiler/c_interface/example</a> => check to see an example using c profile interface  
-<a href="https://github.com/r-kan/semile/tree/master/viewer" target="_blank">viewer/README.txt</a> => check to see how to use semile viewer
+<a href="https://github.com/r-kan/semile/tree/master/viewer" target="_blank">viewer/README.txt</a> => check to see how to use `semile` viewer
 
 # Contact  
 Please contact <a href='http://r-kan.github.io'>*Rodney Kan*</a> by its_right@msn.com for any question/request/bug without hesitation. 
