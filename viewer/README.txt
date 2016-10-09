@@ -38,7 +38,7 @@ remove_no_msg_entry (default: False)
 max_branch (default: 10)
   => n: the maximum number of shown inner execution in PNG format output 
 
-max_msg_length (default: 40)
+max_msg_length (default: 100)
   => n: the maximum length of shown message per execution
 
 =================================================
