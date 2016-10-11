@@ -1,5 +1,6 @@
 Use the following to give profile specificaiton
 * **SEMILE_BEGIN**: to allocate a profile resource  
+* **SEMILE_BEGIN_N(**_abc_**)**: to allocate a profile resource with name _abc_  
 * **SEMILE_END**: to release a profile resource  
 * **SEMILE_MSG_C**: to add debug message  
 
