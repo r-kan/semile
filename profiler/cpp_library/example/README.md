@@ -5,8 +5,6 @@ Use the following to give profile specificaiton
 
 Also check code snipplet in <a href='https://github.com/r-kan/semile/blob/master/profiler/cpp_library/example/quicksort.c'>quicksort.cpp</a>
 ```cpp
-void quicksort(int* x, int start_pos, int end_pos)
-{
 void quicksort(vector<int>& x, int start_pos, int end_pos)
 {
   SEMILE;
