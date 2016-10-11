@@ -17,5 +17,4 @@ void quicksort(vector<int>& x, int start_pos, int end_pos)
   Swap(x, i, j);  
   SEMILE_MSG(GetStr(x[i]) + " <=> " + GetStr(x[j]) + "\\n");
 }
-}
 ```
