@@ -5,7 +5,7 @@ Use the following to give profile specificaiton
 * **SEMILE_MSG_C**: to add debug message  
 
 
-Also check code snipplet in <a href='https://github.com/r-kan/semile/blob/master/profiler/c_interface/example/quicksort.c'>quicksort.c</a>
+Check <a href='https://github.com/r-kan/semile/blob/master/profiler/c_interface/example/quicksort.c'>quicksort.c</a> for a complete example with code snippet:
 ```c
 void quicksort(int* x, int start_pos, int end_pos)
 {
