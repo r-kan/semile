@@ -1,5 +1,6 @@
 Use the following to give profile specificaiton
-* **SEMILE**: define a profile scope    
+* **SEMILE**: define a profile scope
+* **SEMILE_n(**_abc_**)**: define a profile scope with name _abc_  
 * **SEMILE_MSG**: add debug message in current scope  
 
 
