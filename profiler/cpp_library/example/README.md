@@ -3,7 +3,7 @@ Use the following to give profile specificaiton
 * **SEMILE_MSG**: add debug message in current scope  
 
 
-Also check code snipplet in <a href='https://github.com/r-kan/semile/blob/master/profiler/cpp_library/example/quicksort.c'>quicksort.cpp</a>
+Also check code snipplet in <a href='https://github.com/r-kan/semile/blob/master/profiler/cpp_library/example/quicksort.cpp'>quicksort.cpp</a>
 ```cpp
 void quicksort(vector<int>& x, int start_pos, int end_pos)
 {
