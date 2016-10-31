@@ -339,7 +339,8 @@ class ProfileParser(object):
         rows = []
         positions_pattern = "+{"
         positions_end_pattern = "}+"
-        with open(profile, 'r') as fd:
+        import codecs
+        with codecs.open(profile, 'r', encoding='utf-8', errors='ignore') as fd:
             for line in fd.readlines():
                 pos_positions_begin = line.find(positions_pattern)
                 pos_positions_end = line.find(positions_end_pattern)
