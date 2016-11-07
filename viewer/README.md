@@ -1,6 +1,6 @@
 # Command line usage
 ```
-usage: prof_view.py [-h] [-c CONFIG_FILE] profile
+usage: smview [-h] [-c CONFIG_FILE] profile
 
 The Semile Viewer
 
@@ -14,8 +14,10 @@ optional arguments:
 ```
 
 # Example
-  _python3_ **prof_view.py** `case_demo`  
+  _python_ **smview** `case_demo`  
   => `case_demo.png` and `case_demo.xml` will be generated  
+  
+  Note: only support python version 3.x, python version 2.x is not supported  
   
 # Configurable file options 
 
