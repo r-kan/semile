@@ -6,7 +6,7 @@ import os
 import sys
 from logging import warning
 from global_def import get_use_reduced_time, get_longer_time_first, get_remove_no_msg_entry, \
-    get_max_branch, get_user_config_file, get_max_msg_length, get_traverse
+    get_max_branch, get_max_msg_length, get_traverse
 
 # Ref. http://www.graphviz.org/doc/info/colors.html
 __ROOT_COLOR = "plum1"
@@ -436,12 +436,11 @@ class ProfileViewer(object):
                                 dest="config_file", default=DEFAULT_CONFIG_FILE,
                                 help="config file name (default: '" + DEFAULT_CONFIG_FILE + "')")
         args = arg_parser.parse_args()
-        config_file = get_user_config_file() if os.path.exists(get_user_config_file()) else args.config_file
-        if not os.path.exists(config_file):
+        if not os.path.exists(args.config_file):
             print("config file not found, use default setting")
         else:
-            print("use config file:", config_file)
-            ProfileViewer.__parse_config(config_file)
+            print("use config file:", args.config_file)
+            ProfileViewer.__parse_config(args.config_file)
 
         self.__profile = args.profile
         if not os.path.exists(self.__profile):
@@ -501,12 +500,11 @@ class ProfileViewer(object):
         if not dot_path:
             print("[WARNING] \"dot\" not available, skip generating PNG file")
         else:
+            # TODO: check dot version... 2.2 is too old, 2.3.8 is tested and okay...
             os.system(dot_path + " " + dot_file + " -T png -o " + pic_file)
         os.remove(dot_file)
 
-
-if __name__ == '__main__':
-    viewer = ProfileViewer()
-    if get_traverse():
-        print(viewer.traverse())  # this only print node info. (irrelevant to profile construction)
-    viewer.build_prof_view()
+    def run(self):
+        if get_traverse():
+            print(self.traverse())  # this only print node info. (irrelevant to profile construction)
+        self.build_prof_view()

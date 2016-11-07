@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-
 
 def get_delim():
     import platform
@@ -91,71 +89,3 @@ def set_traverse(traverse):
 
 def get_traverse():
     return __TRAVERSE
-
-
-__DATA_HOME = (os.environ['HOME'] + get_delim() + 'semile' + get_delim()) if 'HOME' in os.environ else ''
-
-
-def set_data_home(home):
-    global __DATA_HOME
-    __DATA_HOME = home
-
-
-def get_data_home():
-    return __DATA_HOME
-
-
-def get_user_config_file():
-    return __DATA_HOME + "config.ini"
-
-
-def config_action():
-    config_file = get_user_config_file()
-    if config_file:
-        from util.config import Config
-        Config(config_file).set_general_setting()
-
-
-class CustomPrint(object):
-
-    def __init__(self, verbose):
-        self.verbose = verbose
-
-    def set_verbose(self, verbose):
-        self.verbose = verbose
-
-    def show(self, *msg):
-        if self.verbose:
-            print(*msg)
-
-    # noinspection PyMethodMayBeStatic
-    def info(self, *msg):
-        print("[info]", *msg)
-
-    # noinspection PyMethodMayBeStatic
-    def error(self, *msg):
-        print("[error]", *msg)
-
-
-__OUT = CustomPrint(False)
-
-
-def set_verbose(verbose):
-    global __OUT
-    __OUT.set_verbose(verbose)
-
-
-def get_verbose():
-    return __OUT.verbose
-
-
-def show(*msg):
-    __OUT.show(*msg)
-
-
-def info(*msg):
-    __OUT.info(*msg)
-
-
-def error(*msg):
-    __OUT.error(*msg)

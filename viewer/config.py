@@ -7,9 +7,7 @@ from global_def import get_use_reduced_time, set_use_reduced_time, \
     get_remove_no_msg_entry, set_remove_no_msg_entry, \
     get_max_branch, set_max_branch, \
     get_max_msg_length, set_max_msg_length, \
-    get_traverse, set_traverse, \
-    get_verbose, set_verbose, \
-    get_data_home, set_data_home
+    get_traverse, set_traverse
 
 
 class Config(object):
@@ -39,19 +37,12 @@ class Config(object):
         set_max_branch(max_branch)
         set_max_msg_length(max_msg_length)
         set_traverse(traverse)
-        data_home = get_data_home() if not self.__config.has_option("reminder", "data_location") else \
-            self.__config.get("reminder", "data_location")
-        verbose = get_verbose() if not self.__config.has_option("reminder", "verbose") else \
-            "True" == self.__config.get("reminder", "verbose")
-        set_data_home(data_home)
-        set_verbose(verbose)
-        print("====  semile setting  =======")
+        print("====  smview setting  =======")
         print("use reduced time: ", reduced_time)
         print("longer time first:", longer_time_first)
         print("remove no msg entry:", remove_no_msg_entry)
         print("max branch:       ", max_branch)
         print("max msg length:   ", max_msg_length)
-        # print("data home:        ", data_home)
         print("=============================")
 
     def get_setting(self, section, option):
