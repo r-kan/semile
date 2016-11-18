@@ -4,7 +4,7 @@
 import logging
 import os
 import sys
-from logging import warning
+from logging import warning, error, info, debug, INFO, DEBUG
 from global_def import get_use_reduced_time, get_longer_time_first, get_remove_no_msg_entry, \
     get_max_branch, get_max_msg_length, get_traverse
 
@@ -84,7 +84,7 @@ class Node(object):
             if get_remove_no_msg_entry():
                 if node.no_message():
                     continue
-            logging.debug("%s %s => %s" % (pos, elapsed_time, node.message))
+            # debug("%s %s => %s" % (pos, elapsed_time, node.message))
             if is_dot:
                 self_to_child_str = get_dot_str(self.position if not parent_is_group else "",
                                                 self.elapsed_time, self.serial_no,
@@ -247,7 +247,7 @@ class Tree(object):
         self.__serial_no = 1
 
     def add_row(self, row):
-        # print(str(row))
+        # info(str(row))
         elapsed_time = row.current_time - self._current_time
         elapsed_time -= ProfileParser.__reduce_time__  # reduce time, to simulate the profiling overhead, e.g., bash -x
         if elapsed_time <= 0:
@@ -397,7 +397,7 @@ class ProfileParser(object):
         elapsed_times.sort()
         if elapsed_times:
             ProfileParser.__reduce_time__ = elapsed_times[int(len(elapsed_times) / 2)]  # use median as reduced time
-            print("use reduced time:", ProfileParser.__reduce_time__)
+            info("use reduced time: %s" % ProfileParser.__reduce_time__)
 
 
 def flush_print(msg):
@@ -421,6 +421,29 @@ def locate_abs_exec(program):  # 'program' can be an absolute path name, or just
     return None
 
 
+def pp_popen_out(out_str):
+    return str(out_str).replace("b'", '').replace("\\n'", '')
+
+
+def get_dot_version(dot_path):
+    cmd_list = [dot_path, "-V"]
+    from subprocess import Popen, PIPE, STDOUT
+    stdout_data, _ = Popen(cmd_list, stdout=PIPE, stderr=STDOUT).communicate()
+    seg_is_version = False
+    for seg in pp_popen_out(stdout_data).split():
+        if seg == "version":
+            seg_is_version = True
+            continue
+        if seg_is_version:
+            try:
+                vnumbers = seg.split('.')
+                return [int(number) for number in vnumbers], seg
+            except ValueError:
+                warning("[WARN] cannot identify \"dot\" version")
+                break
+    return None, "NA"
+
+
 DEFAULT_CONFIG_FILE = "config.ini"
 
 
@@ -428,27 +451,29 @@ class ProfileViewer(object):
 
     def __init__(self):
         self.__has_error = False
-        logging.basicConfig(format='')
         import argparse
         arg_parser = argparse.ArgumentParser(description="The Semile Viewer")
         arg_parser.add_argument('profile')
         arg_parser.add_argument("-c", "--config",
                                 dest="config_file", default=DEFAULT_CONFIG_FILE,
                                 help="config file name (default: '" + DEFAULT_CONFIG_FILE + "')")
+        arg_parser.add_argument("-v", "--verbose", dest="verbose", action="store_const", const=DEBUG, help="verbose mode")
         args = arg_parser.parse_args()
+        log_level = args.verbose if args.verbose else INFO
+        logging.basicConfig(format='', level=log_level)
         if not os.path.exists(args.config_file):
-            print("config file not found, use default setting")
+            warning("[WARN] config file not found, use default setting")
         else:
-            print("use config file:", args.config_file)
+            info("use config file: %s" % args.config_file)
             ProfileViewer.__parse_config(args.config_file)
 
         self.__profile = args.profile
         if not os.path.exists(self.__profile):
-            print("[ERROR]", self.__profile, "not available")
+            error("[ERROR] " + self.__profile + " not available")
             sys.exit()
 
-        print("profile:", self.__profile)
-        flush_print("Parsing profile data...")
+        info("input profile: %s" % self.__profile)
+        flush_print("parsing profile data...")
         parser = ProfileParser(self.__profile)
         self.__execution_tree = Tree(parser.start_time)
         for prof_row in parser:
@@ -469,13 +494,13 @@ class ProfileViewer(object):
         adopt_name = os.path.basename(self.__profile).replace(file_extname, '')
         dot_file = adopt_name + ".dot"
         pic_file = adopt_name + ".png"
-        flush_print("Generate prof view [" + pic_file + "]")
+        flush_print("generate prof view [" + pic_file + "]")
         dot_fd = ProfileViewer.__begin_dot(dot_file)
         self.__execution_tree.build_view(dot_fd, get_max_branch(), True)
         ProfileViewer.__end_dot(dot_fd, dot_file, pic_file)
 
         xml_file = adopt_name + ".xml"
-        flush_print("Generate command view [" + xml_file + "]")
+        flush_print("generate command view [" + xml_file + "]")
         xml_fd = open(xml_file, 'w')
         xml_fd.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
         main_tag_str = "program_" + "%.4f" % self.__execution_tree.total_time
@@ -498,10 +523,23 @@ class ProfileViewer(object):
         write_fd.close()
         dot_path = locate_abs_exec("dot")
         if not dot_path:
-            print("[WARNING] \"dot\" not available, skip generating PNG file")
+            warning("[WARN] \"dot\" not available, skip generating PNG file")
         else:
-            # TODO: check dot version... 2.2 is too old, 2.3.8 is tested and okay...
-            os.system(dot_path + " " + dot_file + " -T png -o " + pic_file)
+            vnumbers, vstring = get_dot_version(dot_path)
+            non_supported_version = [2, 2]
+            dot_version_okay = True
+            if vnumbers:
+                if vnumbers[0] < non_supported_version[0] or \
+                                vnumbers[0] == non_supported_version[0] and \
+                                vnumbers[1] and vnumbers[1] <= non_supported_version[1]:
+                    dot_version_okay = False
+                    error("[ERROR] PNG file is not generated, reason: dot version <= %s.%s is not supported"
+                          ", current version is %s"
+                          % (non_supported_version[0], non_supported_version[1], vstring))
+                else:
+                    debug("dot version: %s" % vstring)
+            if dot_version_okay:
+                os.system(dot_path + " " + dot_file + " -T png -o " + pic_file)
         os.remove(dot_file)
 
     def run(self):
