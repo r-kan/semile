@@ -177,7 +177,8 @@ class UnitNode(Node):
         node_tuples = []
         for pos in self.__nodes:
             node = self.__nodes[pos]
-            node_tuples.append([node.position, node, node.elapsed_time, node.serial_no])
+            serial_no = node.serial_no if type(node) is UnitNode else node.get_first_subnode_serial_no()
+            node_tuples.append([node.position, node, node.elapsed_time, serial_no])
         if get_longer_time_first():
             sorted_tuple = sorted(node_tuples, key=lambda x: x[2], reverse=True)
         else:
@@ -189,6 +190,9 @@ class GroupNode(Node):
     def __init__(self, position):
         super(GroupNode, self).__init__(position, 0, "")
         self.__nodes = []  # UnitNode
+
+    def get_first_subnode_serial_no(self):
+        return self.__nodes[0].serial_no
 
     def no_message(self):
         if "" != self.message:
