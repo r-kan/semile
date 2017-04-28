@@ -4,12 +4,12 @@ _\~Simpler way to profile and diagnose\~_ http://r-kan.github.io/semile/
 2016/10/07: c interface is supported  
 2016/09/24: `semile` is refined with much more simpler use model!
 
-#What is _semile_?  
+# What is _semile_?  
 A profiling framework provides the ability to monitor programs, in general of any programming language, by the following two pieces of information:  
 * consumed time per execution  
 * 'footprint' debug message per execution  
 
-#Difference with other profiling tools?  
+# Difference with other profiling tools?  
 * **_Profile 'semantically'_**  Each call to the same function plays its individual role within profiling. Normal 'syntactic' profilers are good in other aspects but fail to achieve this.  
 * **_Lightweight_**  The profiled program gives little run-time overhead. The viewer is compact that targets to provide only necessary information without fancy visual effect. It gives profile result in widespread PNG and XML format.  
 * **_Message-embedded profile_**  Custom information can be left within profile elements. It then also provides the ability to help reveal internal state/decision inside the program.  
